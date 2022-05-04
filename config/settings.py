@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-1sb^k_8rg@6k*hu0eu9oukgpt4g8d!0l_^n=fg*$mpv4=8)s40
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
+CSRF_TRUSTED_ORIGINS = ['moz-extension://97778a49-01d5-44d0-b5c3-bff83b12cf2e']
 
 
 # Application definition
@@ -45,6 +46,10 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'api.permissions.IsStaffOrReadonly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication', # only for tests
+        'rest_framework.authentication.SessionAuthentication', # for apps with one type client (only web for example)
     ]
 }
 
