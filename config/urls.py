@@ -14,16 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework.authtoken.views import obtain_auth_token
-from api.views import RevokeToken
+from django.urls import path, include, re_path
+# from rest_framework.authtoken.views import obtain_auth_token
+from api.views import GoogleLogin, EmailConfirmView
+from dj_rest_auth.views import PasswordResetConfirmView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('', include('blog.urls')),
     path('api/', include('api.urls')),
-    path('api/token-auth/', obtain_auth_token),
-    path('api/revoke_token/', RevokeToken.as_view()),
+    # path('api/token-auth/', obtain_auth_token),
+    # path('api/revoke_token/', RevokeToken.as_view()),
+    path('api/rest-auth/', include('dj_rest_auth.urls')),
+    path('api/rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('api/rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
+    path('api/rest-auth/password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    re_path(
+        r'^account-confirm-email/(?P<key>[-:\w]+)/$', EmailConfirmView.as_view(),
+        name='account_confirm_email',
+    ),
 
 ]
