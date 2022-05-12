@@ -37,14 +37,6 @@ class UserRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     permission_classes = (SuperUserOrReadonly,)
 
 
-# class RevokeToken(APIView):
-#     permission_classes = (IsAuthenticated,)
-
-#     def delete(self, request):
-#         request.auth.delete()
-#         return Response(status=204)
-
-
 class GoogleLogin(SocialLoginView): # if you want to use Authorization Code Grant, use this
     adapter_class = GoogleOAuth2Adapter
     callback_url = 'http://127.0.0.1:8000/api/'
