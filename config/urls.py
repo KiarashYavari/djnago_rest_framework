@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 # from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework_simplejwt import views as jwt_views
 from api.views import GoogleLogin, EmailConfirmView
 from dj_rest_auth.views import PasswordResetConfirmView
 
@@ -24,8 +25,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('', include('blog.urls')),
     path('api/', include('api.urls')),
-    # path('api/token-auth/', obtain_auth_token),
-    # path('api/revoke_token/', RevokeToken.as_view()),
     path('api/rest-auth/', include('dj_rest_auth.urls')),
     path('api/rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
@@ -34,5 +33,6 @@ urlpatterns = [
         r'^account-confirm-email/(?P<key>[-:\w]+)/$', EmailConfirmView.as_view(),
         name='account_confirm_email',
     ),
-
+    # path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
