@@ -1,11 +1,12 @@
-from django.urls import path
-from .views import (ArticleListCreateView, ArticleRetrieveUpdateDeleteView,
- UserListCreateView, UserRetrieveUpdateDeleteView)
-
+from django.urls import path, include
+from rest_framework import routers
+from .views import UserViewSet, ArticleViewSet
 app_name="api"
+
+router = routers.SimpleRouter()
+router.register('', ArticleViewSet)
+router.register('users', UserViewSet)
+
 urlpatterns = [
-    path('', ArticleListCreateView.as_view(), name="api_list_create"),
-    path('<int:pk>', ArticleRetrieveUpdateDeleteView.as_view(), name="api_detail"),
-    path('users/', UserListCreateView.as_view(), name="api_user_list_create"),
-    path('users/<int:pk>', UserRetrieveUpdateDeleteView.as_view(), name="api_user_detail"),
+   path("", include(router.urls)),
 ]
