@@ -50,12 +50,17 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 
+    'django_filters',
+
     'blog.apps.BlogConfig',
     'api.apps.ApiConfig',
 ]
 
 
 SITE_ID = 1
+JWT_AUTH_COOCKIE = 'blog_access'
+JWT_AUTH_REFRESH_COOCKIE = 'blog_refresh'
+REST_USE_JWT = True # to use jwt instead of rest default token authentication
 
 
 REST_FRAMEWORK = {
@@ -64,18 +69,16 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.BasicAuthentication', # only for tests
-        # 'rest_framework.authentication.SessionAuthentication', # for apps with one type client (only web)
+        'rest_framework.authentication.SessionAuthentication', # for apps with one type client (only web)
         # 'rest_framework.authentication.TokenAuthentication' # for all kind of clients
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication', # to setup dj-rest-auth with jwt
-        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication', 
-    ]
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
 }
 
 
-
-JWT_AUTH_COOCKIE = 'blog_access'
-JWT_AUTH_REFRESH_COOCKIE = 'blog_refresh'
-REST_USE_JWT = True # to use jwt instead of rest default token authentication
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 

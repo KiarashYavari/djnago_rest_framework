@@ -4,7 +4,6 @@ from .serializers import ArticleSerializer, UserSerializer
 from blog.models import Article
 from django.contrib.auth import get_user_model
 from rest_framework.viewsets import ModelViewSet
-# from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .permissions import IsAuthorOrReadonly, SuperUserOrReadonly, IsStaffOrReadonly
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
@@ -16,6 +15,7 @@ from dj_rest_auth.registration.views import SocialLoginView
 class ArticleViewSet(ModelViewSet):
     queryset =  Article.objects.all()
     serializer_class = ArticleSerializer
+    filterset_fields = ["status", "author__username", "author"]
 
 
     def get_permissions(self):
