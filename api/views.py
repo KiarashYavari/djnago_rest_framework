@@ -16,6 +16,13 @@ class ArticleViewSet(ModelViewSet):
     queryset =  Article.objects.all()
     serializer_class = ArticleSerializer
     filterset_fields = ["status", "author__username", "author"]
+    search_fields = [
+            'title', 
+            'content', 
+            'author__username', 
+            'author__first_name', 
+            'author__last_name'
+    ]
 
 
     def get_permissions(self):
