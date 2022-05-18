@@ -23,6 +23,8 @@ class ArticleViewSet(ModelViewSet):
             'author__first_name', 
             'author__last_name'
     ]
+    ordering = ['-published']
+    ordering_fields = ['status', 'published']
 
 
     def get_permissions(self):
