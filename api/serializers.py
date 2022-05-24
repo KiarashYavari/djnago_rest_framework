@@ -1,17 +1,11 @@
 from rest_framework import serializers
 from blog.models import Article
 from django.contrib.auth import get_user_model
+from drf_dynamic_fields import DynamicFieldsMixin
 
 
 
-# class AuthorSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = get_user_model()
-#         fields = ["id", "username", "first_name", "last_name"]
-
-
-
-class ArticleSerializer(serializers.ModelSerializer):
+class ArticleSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
 
 
     def get_author(self, obj):
